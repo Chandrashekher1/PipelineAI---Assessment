@@ -1,4 +1,4 @@
-import { pokemon_api } from "../utils/constants"
+import { pokemon_api, pokemon_type_api } from "../utils/constants"
 
 export const getPokemonList = async () => {
     try {
@@ -40,12 +40,13 @@ export const getPokemonByName = async (name: string) => {
     }
     catch (err) {
         console.error("Error in fetching Pokemon", err)
+        throw err
     }
 }
 
 export const getPokemonByType = async (type: string) => {
     try {
-        const response = await fetch(`${pokemon_api}/type/${type}`)
+        const response = await fetch(`${pokemon_type_api}/${type}`)
         if (!response.ok) {
             throw new Error(`Error in fetching Pokemon ${response.status}`)
         }
@@ -56,6 +57,7 @@ export const getPokemonByType = async (type: string) => {
         console.error("Error in fetching Pokemon", err)
     }
 }
+
 export const getPokemonDetails = async (url: string) => {
     const response = await fetch(url);
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getLoadMorePokemon, getPokemonByName, getPokemonList } from "../services/pokemonApi"
+import { getLoadMorePokemon, getPokemonByName, getPokemonByType, getPokemonList } from "../services/pokemonApi"
 
 export const usePokemon = () => {
     const [pokemon, setPokemon] = useState([])
@@ -30,6 +30,7 @@ export const usePokemon = () => {
 
     const searchPokemonByName = async (name: string) => {
         if (!name.trim()) {
+            fetchPokemon()
             return
         }
         try {
@@ -39,7 +40,8 @@ export const usePokemon = () => {
             setPokemon([result])
         }
         catch (err) {
-            setError(err.message)
+            setPokemon([])
+            setError(null)
         }
         finally {
             setLoading(false)
@@ -66,6 +68,35 @@ export const usePokemon = () => {
             setLoading(false)
         }
     }
+
+    const filterByType = async (type: string) => {
+
+        const types = type.toLocaleLowerCase().trim()
+        if (types === "all") {
+            fetchPokemon()
+            return
+        }
+        try {
+            setLoading(true)
+            setError(null)
+            const result = await getPokemonByType(types)
+            // console.log(result?.pokemon.slice(0, 20).map((pokemon: any) => pokemon.pokemon.name));
+
+            const details = await Promise.all(
+                result?.pokemon?.slice(0, 20).map((pokemon: any) => (
+                    getPokemonByName(pokemon?.pokemon?.name)
+                ))
+            )
+            setPokemon(details)
+        }
+        catch (err) {
+            setError(err.message)
+        }
+        finally {
+            setLoading(false)
+        }
+    }
+
     useEffect(() => {
         fetchPokemon()
     }, [])
@@ -76,6 +107,7 @@ export const usePokemon = () => {
         error,
         fetchPokemon,
         searchPokemonByName,
-        loadMorePokemon
+        loadMorePokemon,
+        filterByType
     }
 }
