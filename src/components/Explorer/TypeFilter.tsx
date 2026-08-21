@@ -92,6 +92,7 @@ export default function TypeFilter({ filterByType }: TypeFilterProps) {
                     );
                 })}
             </div>
+
         </section>
     );
 }

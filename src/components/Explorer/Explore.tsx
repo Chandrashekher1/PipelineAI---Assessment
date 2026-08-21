@@ -13,13 +13,14 @@ export default function Explore() {
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
     return (
-        <div className="flex flex-col justify-center items-center mx-16">
+        <div className="flex flex-col justify-center items-center mx-16 mt-16">
             <div className="p-4 rounded-xl shadow-md mx-4 grid grid-2 w-full">
                 <div className="">
                     <div>
                         <TypeFilter filterByType={filterByType} />
                     </div>
-                    <div className="flex justify-end items-center">
+                    <div className="flex justify-between items-center text-center">
+                        <p className="text-sm text-gray-500 font-semibold text-dark">Showing <span className="text-secondary">{loading ? 20 : pokemon.length}</span> Pokemon</p>
                         <SearchBar onSearch={searchPokemonByName} />
                         {/* <SortMenu /> */}
                     </div>
