@@ -13,21 +13,21 @@ export default function Explore() {
     const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
 
     return (
-        <div className="flex flex-col justify-center items-center mx-16 mt-16">
-            <div className="p-4 rounded-xl shadow-md mx-4 grid grid-2 w-full">
+        <div className="flex flex-col justify-center items-center md:mx-16 mx-4 mt-16">
+            <div className="p-4 rounded-xl shadow-md mx-4 grid-1 w-full">
                 <div className="">
                     <div>
                         <TypeFilter filterByType={filterByType} />
                     </div>
-                    <div className="flex justify-between items-center text-center">
-                        <p className="text-sm text-gray-500 font-semibold text-dark">Showing <span className="text-secondary">{loading ? 20 : pokemon.length}</span> Pokemon</p>
+                    <div className="flex md:justify-end items-center text-center">
                         <SearchBar onSearch={searchPokemonByName} />
                         {/* <SortMenu /> */}
                     </div>
                 </div>
             </div>
-            <div className="p-4">
+            <div className="p-4 w-full">
                 {selectedPokemon && <PokemonDetailsModal pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />}
+                <p className="text-sm text-gray-500 font-semibold text-dark md:ml-16 my-4">Showing <span className="text-secondary">{loading ? 20 : pokemon.length}</span> Pokemon</p>
                 <PokemonGrid pokemon={pokemon} onSelectPokemon={setSelectedPokemon} loading={loading} error={error} fetchPokemon={fetchPokemon} />
             </div>
             {!loading && !error && pokemon.length > 0 && (

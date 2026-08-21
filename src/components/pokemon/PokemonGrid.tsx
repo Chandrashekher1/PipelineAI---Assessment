@@ -32,7 +32,7 @@ export default function PokemonGrid({
     }
 
     return (
-        <div className="flex flex-wrap gap-4 mx-16">
+        <div className="flex flex-wrap gap-4 md:mx-16">
             {pokemon.map((poke) => (
                 <PokemonCard
                     key={poke.id}

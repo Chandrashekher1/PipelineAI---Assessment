@@ -39,9 +39,9 @@ export default function PokemonCard({ poke, onClick }: PokemonCardProps) {
     ];
 
     return (
-        <article
+        <div
             onClick={onClick}
-            className={`group w-full max-w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${heroBg}`}
+            className={`group w-full sm:w-[120px] md:w-[220px] cursor-pointer overflow-hidden rounded-2xl border border-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${heroBg}`}
         >
             <div className="flex items-center justify-between">
                 <span className="text-xs font-semibold text-slate-500">
@@ -95,6 +95,6 @@ export default function PokemonCard({ poke, onClick }: PokemonCardProps) {
                     </div>
                 ))}
             </div>
-        </article>
+        </div>
     );
 }

@@ -75,7 +75,7 @@ export default function TypeFilter({ filterByType }: TypeFilterProps) {
                 <ListFilter size={17} className="text-slate-500" />
                 <h2 className="text-sm font-semibold text-dark">Filter by Type</h2>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none w-[85vw] md:w-full ">
                 {types.map((type) => {
                     const Icon = typeIcons[type];
                     const isActive = activeType === type;
