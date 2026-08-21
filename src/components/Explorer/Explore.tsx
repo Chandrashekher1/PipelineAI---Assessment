@@ -2,41 +2,51 @@ import { useState } from "react";
 import { usePokemon } from "../../hooks/usePokemon";
 import PokemonGrid from "../pokemon/PokemonGrid";
 import SearchBar from "./SearchBar";
-import SortMenu from "./SortMenu";
 import TypeFilter from "./TypeFilter";
-import PokemonDetailsModal from "../pokemon/PokemonDetailsModal"
+import PokemonDetailsModal from "../pokemon/PokemonDetailsModal";
+import { Loader2 } from "lucide-react";
+
+import { Pokemon } from "../../types/pokemon";
 
 export default function Explore() {
-    const { pokemon, loading, error, searchPokemonByName, loadMorePokemon, filterByType, fetchPokemon } = usePokemon()
-    const [selectedPokemon, setSelectedPokemon] = useState(null);
+    const { pokemon, loading, loadingMore, error, searchPokemonByName, loadMorePokemon, filterByType, fetchPokemon } = usePokemon();
+    const [selectedPokemon, setSelectedPokemon] = useState<Pokemon | null>(null);
+
     return (
-        <div>
-            <div className="p-4">
-                <div>Explore Type</div>
-                <div className="border-2"></div>
-                <div className="flex justify-between">
+        <div className="flex flex-col justify-center items-center mx-16">
+            <div className="p-4 rounded-xl shadow-md mx-4 grid grid-2 w-full">
+                <div className="">
                     <div>
                         <TypeFilter filterByType={filterByType} />
                     </div>
-
-                    <div className="flex gap-6">
+                    <div className="flex justify-end items-center">
                         <SearchBar onSearch={searchPokemonByName} />
-                        <SortMenu />
+                        {/* <SortMenu /> */}
                     </div>
                 </div>
-                <div>
-                    <h1>Pokemon</h1>
-                </div>
-                <div>
-                    {selectedPokemon && <PokemonDetailsModal pokemon={selectedPokemon} />}
-                    <PokemonGrid pokemon={pokemon} onSelectPokemon={setSelectedPokemon} loading={loading} error={error} fetchPokemon={fetchPokemon} />
-                </div>
+            </div>
+            <div className="p-4">
+                {selectedPokemon && <PokemonDetailsModal pokemon={selectedPokemon} onClose={() => setSelectedPokemon(null)} />}
+                <PokemonGrid pokemon={pokemon} onSelectPokemon={setSelectedPokemon} loading={loading} error={error} fetchPokemon={fetchPokemon} />
             </div>
             {!loading && !error && pokemon.length > 0 && (
-                <div className="flex justify-center">
-                    <button onClick={loadMorePokemon} className="bg-gray-500 text-white px-4 py-2 rounded-full cursor-pointer hover:bg-gray-600 transition-colors">Load More</button>
+                <div className="flex justify-center my-4">
+                    <button
+                        onClick={loadMorePokemon}
+                        disabled={loadingMore}
+                        className="flex items-center gap-2 text-secondary border border-secondary px-12 py-2 rounded-md cursor-pointer hover:bg-secondary hover:text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+                    >
+                        {loadingMore ? (
+                            <>
+                                <Loader2 size={18} className="animate-spin" />
+                                <span>Loading...</span>
+                            </>
+                        ) : (
+                            <span>Load More</span>
+                        )}
+                    </button>
                 </div>
             )}
         </div>
-    )
+    );
 }

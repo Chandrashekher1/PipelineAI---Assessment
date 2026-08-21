@@ -1,1 +1,35 @@
 @import "tailwindcss";
+
+@theme {
+    --color-pokemon-fire: #FF5733;
+    --color-pokemon-water: #3B82F6;
+    --color-pokemon-grass: #22C55E;
+    --color-pokemon-electric: #FACC15;
+    --color-pokemon-ice: #06B6D4;
+    --color-pokemon-fighting: #FF3333;
+    --color-pokemon-poison: #CC33FF;
+    --color-pokemon-ground: #CC9966;
+    --color-pokemon-flying: #A0A0FF;
+    --color-pokemon-psychic: #EC4899;
+    --color-pokemon-bug: #A0CC00;
+    --color-pokemon-rock: #A06000;
+    --color-pokemon-ghost: #8B5CF6;
+    --color-pokemon-dragon: #4F46E5;
+    --color-pokemon-steel: #A0A0A0;
+    --color-pokemon-fairy: #EC4899;
+    --color-pokemon-normal: #A0A0A0;
+    --color-pokemon-dark: #6B7280;
+
+    --color-primary: #6366F1;
+    --color-secondary: #EC4899;
+    --color-accent: #FACC15;
+
+    --color-dark: #0F172A;
+    --color-light: #F8FAFC;
+    --color-surface: #FFFFFF;
+
+    --color-success: #22C55E;
+    --color-warning: #FACC15;
+    --color-error: #EF4444;
+    --color-info: #3B82F6;
+}
