@@ -36,6 +36,14 @@ A modern, interactive Pokémon encyclopedia built with React and the PokéAPI. B
 
 ---
 
+## ScreenShot
+<img width="1894" height="911" alt="image" src="https://github.com/user-attachments/assets/121874c5-0a70-4c4b-b22d-79bd77d74fc7" />
+<img width="1832" height="791" alt="image" src="https://github.com/user-attachments/assets/bd20da2e-7863-47bb-93c4-1f7300df505e" />
+<img width="1577" height="903" alt="image" src="https://github.com/user-attachments/assets/1aa79d1d-5570-4b2c-b881-3f3e09440d1e" />
+
+
+
+
 ## API Used
 
 This project uses the free, open-source **[PokéAPI](https://pokeapi.co/)**.
@@ -45,6 +53,7 @@ This project uses the free, open-source **[PokéAPI](https://pokeapi.co/)**.
 | `GET /api/v2/pokemon?limit=20&offset=0` |
 | `GET /api/v2/pokemon/:name` |
 | `GET /api/v2/type/:type` |
+| `GET /api/v2/pokemon/search` |
 
 ---
 
