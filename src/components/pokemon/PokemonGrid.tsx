@@ -3,6 +3,7 @@ import ErrorState from "../ErrorState";
 import LoadingSkelton from "../LoadinSkelton";
 import PokemonCard from "./PokemonCard";
 import { Pokemon } from "../../types/pokemon";
+import { useFavourite } from "../../hooks/useFavourite";
 
 interface PokemonGridProps {
     pokemon: Pokemon[];
@@ -19,6 +20,9 @@ export default function PokemonGrid({
     error,
     fetchPokemon,
 }: PokemonGridProps) {
+
+    const { toggleFavorite, isFavourite } = useFavourite()
+
     if (error) {
         return <ErrorState error={error} onR={fetchPokemon} />;
     }
@@ -28,7 +32,7 @@ export default function PokemonGrid({
     }
 
     if (!pokemon || pokemon.length === 0) {
-        return <EmptyState />;
+        return <EmptyState title={"No Pokemon found"} description={"Try searching with a different name or select a type."} />;
     }
 
     return (
@@ -38,6 +42,8 @@ export default function PokemonGrid({
                     key={poke.id}
                     poke={poke}
                     onClick={() => onSelectPokemon(poke)}
+                    isFavourite={isFavourite(poke.id)}
+                    onToggleFavorite={() => toggleFavorite(poke)}
                 />
             ))}
         </div>

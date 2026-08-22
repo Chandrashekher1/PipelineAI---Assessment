@@ -2,6 +2,7 @@ import { ArrowLeft, X, Heart } from "lucide-react";
 import { useState } from "react";
 import { typeStyles, typeHeroBackground } from "../../utils/typeStyles";
 import { Pokemon } from "../../types/pokemon";
+import { useFavourite } from "../../hooks/useFavourite";
 
 interface PokemonDetailsModalProps {
     pokemon: Pokemon;
@@ -12,10 +13,11 @@ type TabType = "Overview" | "Abilities" | "Base Stats" | "Moves";
 
 export default function PokemonDetailsModal({ pokemon, onClose }: PokemonDetailsModalProps) {
     const [activeTab, setActiveTab] = useState<TabType>("Overview");
-    const [isFavorite, setIsFavorite] = useState(false);
+    const { toggleFavorite, isFavourite } = useFavourite();
 
     if (!pokemon) return null;
 
+    const isFav = isFavourite(pokemon.id);
     const artwork = pokemon?.sprites?.other?.["official-artwork"]?.front_default ?? pokemon?.sprites?.front_default ?? "";
     const stats = pokemon?.stats ?? [];
     const tabs: TabType[] = ["Overview", "Abilities", "Base Stats", "Moves"];
@@ -39,14 +41,15 @@ export default function PokemonDetailsModal({ pokemon, onClose }: PokemonDetails
                     <div className="flex items-center gap-1.5 sm:gap-2">
                         <button
                             type="button"
-                            onClick={() => setIsFavorite(!isFavorite)}
-                            className={`flex h-8 w-8 sm:h-10 sm:w-10 cursor-pointer items-center justify-center rounded-full border bg-white/90 shadow-sm backdrop-blur transition-all ${isFavorite
-                                ? "border-secondary bg-secondary text-white"
-                                : "border-slate-200 text-slate-500 hover:border-secondary/30 hover:text-secondary"
-                                }`}
+                            onClick={() => toggleFavorite(pokemon)}
+                            className={`flex h-8 w-8 sm:h-10 sm:w-10 cursor-pointer items-center justify-center rounded-full border shadow-sm backdrop-blur transition-all ${
+                                isFav
+                                    ? "border-secondary bg-secondary/15 text-secondary"
+                                    : "border-slate-200 bg-white/90 text-slate-500 hover:border-secondary/30 hover:text-secondary"
+                            }`}
                             title="Favorite"
                         >
-                            <Heart size={16} className="sm:w-[18px] sm:h-[18px]" fill={isFavorite ? "currentColor" : "none"} />
+                            <Heart size={16} className="sm:w-[18px] sm:h-[18px]" fill={isFav ? "currentColor" : "none"} />
                         </button>
 
                         <button

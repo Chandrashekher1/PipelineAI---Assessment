@@ -5,9 +5,11 @@ import { Pokemon } from "../../types/pokemon";
 interface PokemonCardProps {
     poke: Pokemon;
     onClick: () => void;
+    isFavourite: boolean;
+    onToggleFavorite: () => void;
 }
 
-export default function PokemonCard({ poke, onClick }: PokemonCardProps) {
+export default function PokemonCard({ poke, onClick, isFavourite, onToggleFavorite }: PokemonCardProps) {
     const primaryType = poke?.types?.[0]?.type?.name ?? "normal";
     const heroBg = typeHeroBackground[primaryType] ?? "bg-slate-50";
 
@@ -47,19 +49,27 @@ export default function PokemonCard({ poke, onClick }: PokemonCardProps) {
                 <span className="text-xs font-semibold text-slate-500">
                     #{String(poke?.id).padStart(3, "0")}
                 </span>
-
                 <button
                     type="button"
-                    onClick={(e) => e.stopPropagation()}
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-400 transition hover:text-secondary"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleFavorite();
+                    }}
+                    className={`flex h-8 w-8 items-center justify-center rounded-full transition cursor-pointer ${
+                        isFavourite
+                            ? "bg-secondary/15 text-secondary"
+                            : "bg-white/80 text-slate-400 hover:text-secondary"
+                    }`}
                 >
-                    <Heart size={17} />
+                    <Heart
+                        size={17}
+                        fill={isFavourite ? "currentColor" : "none"}
+                    />
                 </button>
             </div>
 
             <div className="relative mt-2 flex h-[150px] items-center justify-center">
                 <div className="absolute h-28 w-28 rounded-full bg-white/60 blur-2xl" />
-
                 <img
                     src={poke?.sprites?.other?.["official-artwork"]?.front_default ?? poke?.sprites?.front_default ?? ""}
                     alt={poke?.name}
@@ -72,7 +82,6 @@ export default function PokemonCard({ poke, onClick }: PokemonCardProps) {
                     {poke?.name}
                 </p>
             </div>
-
             <div className="mt-2 flex flex-wrap gap-1.5">
                 {poke?.types?.map((type) => {
                     const typeName = type?.type?.name;
